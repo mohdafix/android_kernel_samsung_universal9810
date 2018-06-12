@@ -65,7 +65,7 @@ FUNC_BUILD_KERNEL()
 	echo "START   : FUNC_BUILD_KERNEL"
 	echo "================================="
 	echo ""
-	rm $KERNEL_IMG $BUILD_KERNEL_OUT_DIR/arch/arm64/boot/Image
+	rm $KERNEL_IMG $BUILD_KERNEL_OUT_DIR/arch/arm64/boot/Image 2>/dev/null
 	rm -rf $BUILD_KERNEL_OUT_DIR/arch/arm64/boot/dts
 
 	make -C $BUILD_KERNEL_DIR O=$BUILD_KERNEL_OUT_DIR -j$BUILD_JOB_NUMBER ARCH=arm64 \
@@ -103,13 +103,7 @@ FUNC_GENERATE_DTIMG()
     START_TIME=`date +%s`
 
     FUNC_GENERATE_DEFCONFIG
-    if [ "$2" = "--dt-only" ]
-    then
-        FUNC_GENERATE_DTB
-    else
-        FUNC_BUILD_KERNEL
-    fi
-    FUNC_GENERATE_DTIMG
+    FUNC_BUILD_KERNEL
 
     END_TIME=`date +%s`
 
